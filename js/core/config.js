@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.config={model:"baidu/ernie-5.5-flash-preview:free",endpoint:"https://openrouter.ai/api/v1/chat/completions",quota:30,quotaWindow:3600000,pageSize:40,searchDebounce:70,dataParts:20,themeKey:"diba-theme",historyKey:"diba-history",quotaKey:"diba-ai-quota",favoritesKey:"diba-favorites"};})();

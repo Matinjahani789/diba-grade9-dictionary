@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.scroll={init(){let last=0;window.addEventListener("scroll",()=>{const now=window.scrollY;document.documentElement.classList.toggle("is-scrolling",Math.abs(now-last)>1);last=now;},{passive:true});}};})();

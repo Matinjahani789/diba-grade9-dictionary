@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.transitions={enter(element){element.dataset.transition="enter";requestAnimationFrame(()=>setTimeout(()=>delete element.dataset.transition,420));},init(){D.on("results",()=>D.transitions.enter(D.dom.byId("results")));}};})();

@@ -1,0 +1,3 @@
+#search::placeholder{transition:opacity .2s}#search:focus::placeholder{opacity:.65}
+
+footer .creator{transition:color .3s}footer:hover .creator{color:#64748b}

@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.pwa={async init(){if(!("serviceWorker" in navigator)||!window.isSecureContext)return;try{await navigator.serviceWorker.register("./sw.js",{scope:"./"});D.dom.byId("offline-status").textContent+=" · PWA";}catch{D.notice("نصب آفلاین در این محیط در دسترس نیست","warning");}}};})();

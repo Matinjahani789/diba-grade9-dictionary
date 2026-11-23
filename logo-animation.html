@@ -1,0 +1,271 @@
+<!DOCTYPE html><html lang="fa"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><title>Diba</title><style>:root{--logo-i-color:#ffffff}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}body{display:flex;align-items:center;justify-content:center}#logo{display:block;width:100%;height:100%;max-width:100%;max-height:100%;aspect-ratio:899/340;overflow:visible;pointer-events:none;user-select:none}</style></head><body><svg id="logo" viewBox="-102 -20 899 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diba" shape-rendering="geometricPrecision">
+  <title>Diba</title>
+  <defs>
+    <filter id="soft" filterUnits="userSpaceOnUse" x="100" y="15" width="345" height="265" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="0.8" stdDeviation="1.2" flood-color="#0a1c3f" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  
+  <g id="letters" fill="none" stroke="#2878F0" stroke-width="38" stroke-linecap="butt" stroke-linejoin="miter">
+    <g id="gD">
+      <path d="M59 40V260"/>
+      <path d="M59 59H109A91 91 0 0 1 109 241H59"/>
+    </g>
+    <g id="gR">
+      
+      <path d="M344 40V260"/>
+      <circle cx="400" cy="185" r="56"/>
+      
+      <circle cx="580" cy="185" r="56"/>
+      <path d="M636 110V260"/>
+    </g>
+  </g>
+
+  
+  <g id="white" filter="url(#soft)">
+    <circle id="dot" cx="272" cy="63" r="22" fill="var(--logo-i-color)"/>
+    <polygon id="stem" points="253,110 291,110 291,260 253,260" fill="var(--logo-i-color)"/>
+    <g id="book" visibility="hidden">
+      <path id="spine" d="M0 0Z" fill="var(--logo-i-color)" stroke="#aeb8c6" stroke-width="0" stroke-linejoin="round"/>
+      <g id="leaves"></g>
+    </g>
+  </g>
+</svg><script>(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var I_COLOR = '#FFFFFF';
+  var I_RGB = [255,255,255];
+  var $ = function (id) { return document.getElementById(id); };
+  var clamp = function (v, a, b) { a = a === undefined ? 0 : a; b = b === undefined ? 1 : b; return Math.min(b, Math.max(a, v)); };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var seg = function (t, a, b) { return clamp((t - a) / (b - a)); };
+  var eIOC = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  var eIOS = function (t) { return 0.5 - 0.5 * Math.cos(Math.PI * t); };
+  var f = function (n) { return String(+n.toFixed(2)); };
+  var dotEl = $('dot'), stemEl = $('stem'), bookEl = $('book'),
+      spineEl = $('spine'), leavesEl = $('leaves'),
+      gD = $('gD'), gR = $('gR');
+  function setTheme(mode) {
+    I_COLOR = '#FFFFFF';
+    I_RGB = [255,255,255];
+    document.documentElement.style.setProperty('--logo-i-color', I_COLOR);
+    dotEl.setAttribute('fill', I_COLOR);
+    stemEl.setAttribute('fill', I_COLOR);
+  }
+  window.addEventListener('message', function(event) { if (event.data && event.data.type === 'diba-theme') setTheme(event.data.mode); });
+  var initialTheme = new URLSearchParams(location.search).get('theme') || 'light';
+  setTheme(initialTheme);
+  var CX = 272, STEM_W = 38, STEM_H = 150, STEM_CY = 185;
+  var DOT_Y0 = 63, DOT_R = 22, DOT_YB = 185, DOT_S1 = 0.74;
+  var TOTAL_LEN = 150;
+  var L_BOOK = 141.5;
+  var SP = 6;
+  var OV = 2.5;
+  var NL = 12, M = NL - 1;
+  var TH = [], CUM = [], T_FULL = 0, j;
+  for (j = 0; j < NL; j++) {
+    TH[j] = (j === 0 || j === M) ? 6.5 : 2.5;
+    CUM[j] = T_FULL;
+    T_FULL += TH[j];
+  }
+  var CX_FINAL = (L_BOOK + OV - SP) / 2;
+  var EDGE = '#aeb8c6';
+  var CURL = 0.07;
+  var SPREAD_CLOSED = 46;
+  var SPREAD_EXTRA = 66;
+  var leafG = [], leafE = [], leafW = [];
+  for (j = 0; j < NL; j++) {
+    var g = document.createElementNS(NS, 'g');
+    var e = document.createElementNS(NS, 'path');
+    var w = document.createElementNS(NS, 'path');
+    e.setAttribute('fill', 'none'); e.setAttribute('stroke', EDGE);
+    w.setAttribute('fill', 'none'); w.setAttribute('stroke', I_COLOR);
+    g.appendChild(e); g.appendChild(w);
+    leavesEl.appendChild(g);
+    leafG.push(g); leafE.push(e); leafW.push(w);
+  }
+  var lastOrder = '';
+  var END = 5500, HOLD = 5000, CYCLE = END + HOLD, LEAD = 1000;
+  var segs = [];
+  for (j = 0; j < NL; j++) segs.push([]);
+  var i;
+  for (i = 0; i < 4; i++) {
+    segs[11 - i].push({ a: 1300 + i * 55, b: 1300 + i * 55 + 540, from: 0, to: 1 });
+  }
+  var tOff = [0, 290, 590, 880, 1140], tDur = [640, 700, 660, 680, 660];
+  for (i = 0; i < 5; i++) {
+    segs[7 - i].push({ a: 1880 + tOff[i], b: 1880 + tOff[i] + tDur[i], from: 0, to: 1 });
+  }
+  for (j = 3; j <= 11; j++) {
+    var s0 = 3730 + (j - 3) * 22;
+    segs[j].push({ a: s0, b: s0 + 420, from: 1, to: 0 });
+  }
+  var LS = []; for (j = 0; j < NL; j++) LS.push({ s: 0, vel: 0 });
+  function leafState(jj, t) {
+    var s = 0, vel = 0, list = segs[jj];
+    for (var q = 0; q < list.length; q++) {
+      var sg = list[q];
+      if (t >= sg.b) { s = sg.to; vel = 0; }
+      else if (t > sg.a) {
+        var u = (t - sg.a) / (sg.b - sg.a);
+        s = sg.from + (sg.to - sg.from) * eIOS(u);
+        vel = (sg.to - sg.from) * (Math.PI / 2) * Math.sin(Math.PI * u);
+        break;
+      } else { break; }
+    }
+    LS[jj].s = s; LS[jj].vel = vel;
+  }
+  function leafD(len, lvl, theta, curl) {
+    var ct = Math.cos(theta), st = Math.sin(theta);
+    function P(u, v) {
+      var x = u * ct - v * st;
+      var lv = u * st + v * ct;
+      return f(x) + ' ' + f(-(lvl + lv));
+    }
+    return 'M' + P(0, 0) + 'C' + P(len * 0.33, 0) + ' ' + P(len * 0.68, curl * 0.55) + ' ' + P(len, curl);
+  }
+  function openSpread(t) {
+    if (t < 1000) return 0;
+    if (t < 1500) return eIOC(seg(t, 1000, 1500));
+    if (t < 4080) return 1;
+    return 1 - eIOC(seg(t, 4080, 4530));
+  }
+  function renderLetters(t, q) {
+    var d = SPREAD_CLOSED * Math.sin(Math.PI / 2 * q) + SPREAD_EXTRA * openSpread(t);
+    gD.setAttribute('transform', 'translate(' + f(-d) + ' 0)');
+    gR.setAttribute('transform', 'translate(' + f(d) + ' 0)');
+  }
+  function renderDot(t, morph, thick) {
+    var y, s, tone;
+    if (t < 4350) {
+      var p = seg(t, 0, 350), e = eIOC(p);
+      var lift = p < 0.25 ? Math.sin(p / 0.25 * Math.PI) * 4 : 0;
+      y = lerp(DOT_Y0, DOT_YB, e) - lift;
+      s = lerp(1, DOT_S1, e);
+      if (morph > 0) s = Math.min(s, 0.9 * thick / (DOT_R * 2));
+      s *= 1 - eIOC(seg(t, 1050, 1350));
+      tone = e;
+    } else {
+      var p2 = seg(t, 4350, 4750);
+      y = lerp(DOT_YB, DOT_Y0, eIOC(p2));
+      s = p2 < 0.25 ? DOT_S1 * eIOS(p2 / 0.25) : lerp(DOT_S1, 1, eIOC((p2 - 0.25) / 0.75));
+      tone = 1 - eIOC(p2);
+    }
+    dotEl.setAttribute('cy', f(y));
+    dotEl.setAttribute('r', f(DOT_R * s));
+    dotEl.setAttribute('fill', I_COLOR);
+  }
+  function stemWidth(u) { return 8 + (STEM_W - 8) * Math.cos(Math.PI / 2 * u); }
+  function renderStem(u) {
+    var w = stemWidth(u);
+    var skew = 0.07 * Math.sin(Math.PI * u);
+    var xl = CX - w / 2, xr = CX + w / 2;
+    var hl = STEM_H / 2 * (1 + skew), hr = STEM_H / 2 * (1 - skew);
+    stemEl.setAttribute('points',
+      f(xl) + ',' + f(STEM_CY - hl) + ' ' + f(xr) + ',' + f(STEM_CY - hr) + ' ' +
+      f(xr) + ',' + f(STEM_CY + hr) + ' ' + f(xl) + ',' + f(STEM_CY + hl));
+  }
+  function renderBook(t, q) {
+    var len = lerp(TOTAL_LEN, L_BOOK, q);
+    var sp = SP * q, ov = OV * q;
+    var k = lerp(0.2222, 1, q);
+    var gf = q;
+    var gap = 0.9 * gf;
+    var phi = -(Math.PI / 2) * (1 - q);
+    var Tcur = T_FULL * k;
+    for (var jj = 0; jj < NL; jj++) leafState(jj, t);
+    var shift = (LS[8].s + LS[9].s + LS[10].s + LS[11].s) / 4;
+    var top = 0, keys = [];
+    var pageFill = 'rgb(' + Math.round(I_RGB[0] + (255 - I_RGB[0]) * 0.035 * gf) + ',' + Math.round(I_RGB[1] + (255 - I_RGB[1]) * 0.035 * gf) + ',' + Math.round(I_RGB[2] + (255 - I_RGB[2]) * 0.035 * gf) + ')';
+    for (jj = 0; jj < NL; jj++) {
+      var cover = (jj === 0 || jj === M);
+      var th = TH[jj] * k;
+      var yR = CUM[jj] * k;
+      var yL = (T_FULL - CUM[jj] - TH[jj]) * k;
+      var s = LS[jj].s, vel = LS[jj].vel;
+      var base = lerp(yR, yL, s);
+      var lvl = base + th / 2;
+      var theta = Math.PI * s;
+      var plen = cover ? len + ov : len;
+      var curl = -CURL * plen * Math.sin(theta) * vel * (cover ? 0.35 : 1);
+      top = Math.max(top, base + th);
+      leafE[jj].setAttribute('d', leafD(plen + gap * 0.6, lvl, theta, curl));
+      leafE[jj].setAttribute('stroke-width', f(th));
+      leafW[jj].setAttribute('d', leafD(plen, lvl, theta, curl));
+      leafW[jj].setAttribute('stroke-width', f(Math.max(0.05, th - gap)));
+      leafW[jj].setAttribute('stroke', cover ? I_COLOR : pageFill);
+      keys.push({ j: jj, z: base + s * 0.001 + jj * 0.0001 });
+    }
+    keys.sort(function (a, b) { return a.z - b.z; });
+    var order = keys.map(function (o) { return o.j; }).join(',');
+    if (order !== lastOrder) {
+      for (var z = 0; z < keys.length; z++) leavesEl.appendChild(leafG[keys[z].j]);
+      lastOrder = order;
+    }
+    var spE = sp * (1 - shift);
+    var b = -1.3333 * spE;
+    spineEl.setAttribute('d', 'M0 0C' + f(b) + ' 0 ' + f(b) + ' ' + f(-top) + ' 0 ' + f(-top) + 'Z');
+    spineEl.setAttribute('stroke-width', f(gap * clamp(spE / SP)));
+    var Cx = (len + ov - sp) / 2, Cy = -Tcur / 2;
+    var c = Math.cos(phi), sn = Math.sin(phi);
+    var ox = CX - (Cx * c - Cy * sn) + shift * CX_FINAL;
+    var oy = STEM_CY - (Cx * sn + Cy * c);
+    bookEl.setAttribute('transform', 'translate(' + f(ox) + ' ' + f(oy) + ') rotate(' + f(phi * 180 / Math.PI) + ')');
+  }
+  var mode = 'stem';
+  function render(t) {
+    var morph;
+    if (t < 250) morph = 0;
+    else if (t < 1000) morph = (t - 250) / 750;
+    else if (t < 4750) morph = 1;
+    else if (t < END) morph = 1 - (t - 4750) / 750;
+    else morph = 0;
+    var q = eIOC(clamp((morph - 0.38) / 0.62));
+    var u = eIOS(clamp(morph / 0.38));
+    var thick = morph < 0.38 ? stemWidth(u) : T_FULL * lerp(0.2222, 1, q);
+    renderLetters(t, q);
+    renderDot(t, morph, thick);
+    if (morph < 0.38) {
+      if (mode !== 'stem') { bookEl.setAttribute('visibility', 'hidden'); stemEl.setAttribute('visibility', 'visible'); mode = 'stem'; }
+      renderStem(u);
+    } else {
+      if (mode !== 'book') { stemEl.setAttribute('visibility', 'hidden'); bookEl.setAttribute('visibility', 'visible'); mode = 'book'; }
+      renderBook(t, q);
+    }
+  }
+  var raf = 0, startT = null, lastStatic = null;
+  function frame(now) {
+    if (startT === null) startT = now;
+    var el = now - startT, tc, key = null;
+    if (el < LEAD) { tc = -1; key = 'still'; }
+    else {
+      tc = (el - LEAD) % CYCLE;
+      if (tc >= END) { tc = END + 1; key = 'still'; }
+    }
+    if (key) {
+      if (lastStatic !== key) { render(tc); lastStatic = key; }
+    } else {
+      render(tc); lastStatic = null;
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function start() {
+    if (raf) return;
+    startT = null; lastStatic = null;
+    render(-1);
+    raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    render(-1);
+  }
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function apply() { if (mq && mq.matches) stop(); else start(); }
+  apply();
+  if (mq) {
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply);
+  }
+})();</script></body></html>

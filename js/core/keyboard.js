@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.keyboard={init(){document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();D.dom.byId("search").focus();}if(e.key==="Escape"){D.aiModal.close();D.dom.byId("search").blur();}});}};})();

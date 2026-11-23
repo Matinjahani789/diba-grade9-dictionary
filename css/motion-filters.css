@@ -1,0 +1,3 @@
+.filter{position:relative;overflow:hidden}.filter::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,#ffffff38,transparent);transform:translateX(-120%)}.filter.active::after{animation:filter-sheen .7s ease-out}@keyframes filter-sheen{to{transform:translateX(120%)}}
+
+ .filters{position:relative}.filter.active{box-shadow:inset 0 0 0 1px #ffffff25,0 4px 12px #2563eb30}

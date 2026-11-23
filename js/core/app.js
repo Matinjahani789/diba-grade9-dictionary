@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.app={async init(){D.creator.render();D.transitions.init();D.scroll.init();D.startup.init();}};document.addEventListener("DOMContentLoaded",()=>D.app.init(),{once:true});})();

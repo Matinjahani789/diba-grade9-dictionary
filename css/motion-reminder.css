@@ -1,0 +1,3 @@
+#reminder-stage .reminder-word{animation:reminder-word .6s cubic-bezier(.2,.8,.2,1) both}#reminder-stage .reminder-meaning{animation:reminder-meaning .7s .08s ease both}@keyframes reminder-word{from{opacity:0;transform:translateY(9px);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}@keyframes reminder-meaning{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+#sticky-dock.is-visible{box-shadow:0 12px 28px #0b17342a}

@@ -1,0 +1,1 @@
+self.DibaSearchAgents=self.DibaSearchAgents||{};self.DibaSearchAgents.antonym={name:"متضاد",run(ctx,q,category,subfilter){const out=[];for(const card of ctx.lexical){if(!ctx.allowed(card,category,subfilter)||!card.antonyms)continue;if(ctx.norm(card.antonyms).includes(q))out.push({...card,matchedBy:"antonym"});}return out;}};

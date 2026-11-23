@@ -1,0 +1,1 @@
+self.DibaSearchAgents=self.DibaSearchAgents||{};self.DibaSearchAgents.synonym={name:"هم‌معنی",run(ctx,q,category,subfilter){const out=[];for(const card of ctx.lexical){if(!ctx.allowed(card,category,subfilter)||!card.synonyms)continue;if(ctx.norm(card.synonyms).includes(q))out.push({...card,matchedBy:"synonym"});}return out;}};

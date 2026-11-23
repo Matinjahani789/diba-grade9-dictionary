@@ -1,0 +1,3 @@
+#hero{background-size:160% 160%;animation:header-gradient 12s ease-in-out infinite alternate}@keyframes header-gradient{from{background-position:0% 30%}to{background-position:100% 70%}}
+
+ .ai-loading{position:relative;overflow:hidden}.ai-loading::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,#60a5fa33,transparent);transform:translateX(-100%);animation:load-sweep 1.2s ease-in-out infinite}@keyframes load-sweep{to{transform:translateX(100%)}}

@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.notice=(message,tone="info")=>{const host=D.dom.byId("notice");host.textContent=message;host.className=`notice ${tone}`;host.hidden=false;clearTimeout(D.noticeTimer);D.noticeTimer=setTimeout(()=>host.hidden=true,3200);};})();

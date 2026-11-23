@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.clipboard={async copy(value){try{await navigator.clipboard.writeText(value);D.notice("کپی شد","success");}catch{const t=document.createElement("textarea");t.value=value;document.body.appendChild(t);t.select();const ok=document.execCommand("copy");t.remove();D.notice(ok?"کپی شد":"کپی انجام نشد",ok?"success":"warning");}}};})();

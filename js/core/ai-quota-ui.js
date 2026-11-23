@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.aiQuota={update(){const q=D.quota.read();const el=D.dom.byId("ai-quota");if(el)el.textContent=`سهمیه این مرورگر: ${q.remaining} از ۳۰ کارت`;}};D.on("quota",()=>D.aiQuota.update());})();

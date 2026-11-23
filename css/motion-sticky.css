@@ -1,0 +1,3 @@
+#sticky-dock.is-visible{animation:dock-in .28s var(--motion) both}@keyframes dock-in{from{transform:translateY(-110%)}to{transform:translateY(0)}}
+
+ .error-state{animation:error-shake .32s ease both}@keyframes error-shake{20%,60%{transform:translateX(-3px)}40%,80%{transform:translateX(3px)}}

@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.emit=(name,detail={})=>window.dispatchEvent(new CustomEvent(`diba:${name}`,{detail}));D.on=(name,fn)=>window.addEventListener(`diba:${name}`,event=>fn(event.detail));})();

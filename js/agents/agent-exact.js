@@ -1,0 +1,1 @@
+self.DibaSearchAgents=self.DibaSearchAgents||{};self.DibaSearchAgents.exact={name:"واژه",run(ctx,q,category,subfilter){const out=[];for(const card of ctx.lexical){if(!ctx.allowed(card,category,subfilter))continue;const head=ctx.norm(card.headword);if(head===q)out.push({...card,matchedBy:"exact"});}return out;}};

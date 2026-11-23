@@ -1,0 +1,3 @@
+.example{transition:background .2s,border-color .2s}.example:hover{border-color:#bfdbfe}
+
+ .success-state{animation:success-pop .35s cubic-bezier(.2,.8,.2,1.3) both}@keyframes success-pop{from{transform:scale(.92);opacity:.3}to{transform:scale(1);opacity:1}}

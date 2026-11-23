@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.cardTemplate={esc(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));},line(icon,label,text,cls=""){if(!text)return"";return `<div class="card-line ${cls}"><img src="assets/svg/${icon}.svg" alt=""><div><span>${label}</span> ${this.esc(text)}</div></div>`;}};})();

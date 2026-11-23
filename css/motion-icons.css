@@ -1,0 +1,3 @@
+.filter img,.action img,.hero-control img{transition:transform .24s var(--motion)}@media(hover:hover){.filter:hover img,.action:hover img{transform:scale(1.12)}.hero-control:hover img{transform:rotate(10deg) scale(1.08)}}.hero-control img,.filter.active img,.primary-button img{filter:brightness(0) invert(1)}[data-theme="dark"] .filter:not(.active) img,[data-theme="dark"] .card-line img,[data-theme="dark"] .action img{filter:brightness(0) invert(.78)}.filter:active img{transform:scale(.9) rotate(-6deg)}
+
+ .filters .filter{transition:background .22s,border-color .22s,color .22s,box-shadow .22s,transform .22s}

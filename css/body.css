@@ -1,0 +1,1 @@
+body{font-family:Tahoma,Arial,sans-serif;background:var(--page);color:var(--text);min-width:320px;line-height:1.65;transition:background .25s,color .25s;overflow-x:hidden}button{border:0}button:focus-visible,input:focus-visible{outline:3px solid #60a5fa;outline-offset:2px}

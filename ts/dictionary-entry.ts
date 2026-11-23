@@ -1,0 +1,2 @@
+export interface DictionaryEntry { id: string; kind: "word" | "verb"; headword: string; pronunciationFa: string; pronunciationIpa?: string; meaningFa: string; lesson?: number; partOfSpeech?: string; synonyms: string[]; antonyms: string[]; exampleEn?: string; exampleFa?: string; }
+export const isDictionaryEntry = (value: unknown): value is DictionaryEntry => typeof value === "object" && value !== null && "headword" in value;

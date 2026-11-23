@@ -1,0 +1,1 @@
+(()=>{const D=window.Diba=window.Diba||{};D.dom={byId:id=>document.getElementById(id),one:(s,r=document)=>r.querySelector(s),all:(s,r=document)=>Array.from(r.querySelectorAll(s)),icon:(name,alt="")=>{const img=document.createElement("img");img.src=`assets/svg/${name}.svg`;img.alt=alt;img.setAttribute("aria-hidden",alt?"false":"true");return img;}};})();

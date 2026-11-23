@@ -1,0 +1,1 @@
+.action{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:8px;padding:8px 11px;font-size:11px;background:var(--surface-2);border:1px solid var(--line);color:var(--text);min-height:34px}.action img{width:15px;height:15px}.action:active{transform:scale(.97)}.favorite.is-active{color:#1d4ed8;background:var(--blue-100)}
